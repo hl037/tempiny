@@ -22,7 +22,7 @@ class Tempiny(object):
   TEX = dict(stmt_line_start=r'%#', begin_expr='<<', end_expr='>>')
   def __init__(self, stmt_line_start=PY['stmt_line_start'], begin_expr=PY['begin_expr'], end_expr=PY['end_expr']):
     self.expr = re.compile(rf'{re.escape(begin_expr)}(?P<expr>.*?){re.escape(end_expr)}')
-    self.stmt = re.compile(rf'^\s*{re.escape(stmt_line_start)}\s*(?P<stmt>\S.*?(?P<indent>:)?)\s*$')
+    self.stmt = re.compile(rf'^\s*{re.escape(stmt_line_start)}\s*(?P<stmt>\S.*?(?P<indent>:)?)?\s*$')
 
   def sumup(self, i, b, args):
     if len(args):
@@ -38,6 +38,8 @@ class Tempiny(object):
     for l in lines:
       m = self.stmt.match(l)
       if m:
+        if m.group('stmt') is None : # if no stmt, it's an empty line. Simply ignore it.
+          continue
         if(len(b)):
           out.append(self.sumup(i, b, args))
           b = []
@@ -63,4 +65,9 @@ class Tempiny(object):
     src = '\n'.join(l)
     return Template(compile(src, filename, 'exec'), default_globals, default_locals)
   
+  def compileFilename(self, filename, default_globals = {}, default_locals = {}):
+    with open(filename, 'r') as f :
+      return self.compile(f, filename, default_globals, default_locals)
+      
+    
 
