@@ -14,7 +14,11 @@ class Template(object):
   def __call__(self, out_stream, _globals = {}, _locals = {}):
     g = dict(**self.default_globals, **_globals)
     l = dict(**self.default_locals,  **_locals, _OUT=out_stream)
-    exec(self.code, g, l)
+    try :
+      exec(self.code, g, l)
+    except Exception as exc :
+      return l, exc
+    return l, None
 
 class Tempiny(object):
   C  = dict(stmt_line_start=r'//#', begin_expr='{{', end_expr='}}')
