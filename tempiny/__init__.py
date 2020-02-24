@@ -25,6 +25,7 @@ class Tempiny(object):
   PY = dict(stmt_line_start=r'##', begin_expr='{{', end_expr='}}')
   TEX = dict(stmt_line_start=r'%#', begin_expr='<<', end_expr='>>')
   def __init__(self, stmt_line_start=PY['stmt_line_start'], begin_expr=PY['begin_expr'], end_expr=PY['end_expr']):
+    self.conf = (stmt_line_start, begin_expr, end_expr)
     self.expr = re.compile(rf'{re.escape(begin_expr)}(?P<expr>.*?){re.escape(end_expr)}')
     self.stmt = re.compile(rf'^\s*{re.escape(stmt_line_start)}\s*(?P<stmt>\S.*?(?P<indent>:)?)?\s*$')
 

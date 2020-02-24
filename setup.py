@@ -30,7 +30,7 @@ setup(
     author='Léo Flaventin Hauchecorne',
     author_email='hl037.prog@gmail.com',
     url='http://nop.com',
-    license='LGPLv2',
+    license='LGPLv2.1+',
     packages=find_packages(),
     test_suite=None,
     include_package_data=True,
