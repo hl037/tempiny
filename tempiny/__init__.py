@@ -6,14 +6,21 @@ expr = re.compile(r'\{\{(?P<expr>.*?)\}\}')
 stmt = re.compile(r'^\s*##\s*(?P<stmt>\S.*?(?P<indent>:)?)\s*$')
 
 class Template(object):
-  def __init__(self, code, default_globals = {}, default_locals = {}):
+  def __init__(self, code, default_globals = {}, default_locals = None, src=None):
     self.code = code
     self.default_globals = default_globals
     self.default_locals = default_locals
+    self.src = src
 
-  def __call__(self, out_stream, _globals = {}, _locals = {}):
+  def __call__(self, out_stream, _globals = {}, _locals = None):
     g = dict(**self.default_globals, **_globals)
-    l = dict(**self.default_locals,  **_locals, _OUT=out_stream)
+    if _locals is None and self.default_locals is None :
+      l = g
+      l['_OUT'] = out_stream
+    else:
+      dl = {} if self.default_locals is None else self.default_locals
+      ll = {} if _locals is None else _locals
+      l = dict(**dl,  **ll, _OUT=out_stream)
     try :
       exec(self.code, g, l)
     except Exception as exc :
@@ -63,12 +70,12 @@ class Tempiny(object):
         b.append(self.expr.sub('\x00', l))
     out.append(self.sumup(i, b, args))
 
-  def compile(self, f, filename = '<template>', default_globals = {}, default_locals = {}):
+  def compile(self, f, filename = '<template>', default_globals = {}, default_locals = None):
     """ :f: file-like stream"""
     l = []
     self.parse(iter(f), l)
     src = '\n'.join(l)
-    return Template(compile(src, filename, 'exec'), default_globals, default_locals)
+    return Template(compile(src, filename, 'exec'), default_globals, default_locals, src)
   
   def compileFilename(self, filename, default_globals = {}, default_locals = {}):
     with open(filename, 'r') as f :
