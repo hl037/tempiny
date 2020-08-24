@@ -3,7 +3,7 @@
 
 Tempiny is a tiny and really simple template engine.
 
-The main feature is to be able to execute arbitrary python code inside the tempalte,
+The main feature is to be able to execute arbitrary python code inside the template,
 which makes it really powerfull for code generation for example.
 
 See the skbs project to have a sense of what it can achieve !
@@ -47,12 +47,12 @@ First an example to demonstrate all its features :
 
 will be ouputed as :
 
-   This text will be printed as it is
-   
-   lines starting with '##' (or a user-configured prefix) are be python code.
-   
-   
-   if/else/for/while/with/try/except etc blocks don't need indentation. instead, a line containing only '## -' marks the block end.
+    This text will be printed as it is
+    
+    lines starting with '##' (or a user-configured prefix) are be python code.
+    
+    
+    if/else/for/while/with/try/except etc blocks don't need indentation. instead, a line containing only '## -' marks the block end.
    
     This text will be printed 5 times (a = 5) Btw, between a double brace (2 '{'), you can put expression that will be converted to str, and printed instead.
     To escape it, The prefered way is to declare variables containing the tokens (as done in skbs)
@@ -194,7 +194,7 @@ Example:
 # License Notice
 
 Tempiny is a tiny template engine
-Copyright (C) 2016 Léo Flaventin Hauchecorne
+Copyright © 2016-2020 Léo Flaventin Hauchecorne
 
 This library is free software; you can redistribute it and/or
 modify it under the terms of the GNU Lesser General Public
