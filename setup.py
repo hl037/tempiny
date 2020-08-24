@@ -30,7 +30,7 @@ setup(
     long_description_content_type='text/markdown',
     author='Léo Flaventin Hauchecorne',
     author_email='hl037.prog@gmail.com',
-    url='http://nop.com',
+    url='https://github.com/hl037/tempiny',
     license='LGPLv2.1+',
     packages=find_packages(),
     test_suite=None,
