@@ -15,7 +15,7 @@ def read_file(name):
         print("could not read %r" % name)
         f.close()
 
-LONG_DESC = read_file('README.rst') + '\n\n' + read_file('HISTORY.rst')
+LONG_DESC = read_file('README.md') + '\n\n' + read_file('HISTORY.md')
 
 EXTRAS = {}
 
@@ -27,6 +27,7 @@ setup(
     version='1.0',
     description='Tiny template engine',
     long_description=LONG_DESC,
+    long_description_content_type='text/markdown',
     author='Léo Flaventin Hauchecorne',
     author_email='hl037.prog@gmail.com',
     url='http://nop.com',
