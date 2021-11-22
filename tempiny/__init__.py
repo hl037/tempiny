@@ -1,6 +1,7 @@
 
 import re
 import itertools
+import linecache
 
 expr = re.compile(r'\{\{(?P<expr>.*?)\}\}')
 stmt = re.compile(r'^\s*##\s*(?P<stmt>\S.*?(?P<indent>:)?)\s*$')
@@ -70,12 +71,17 @@ class Tempiny(object):
         b.append(self.expr.sub('\x00', l))
     out.append(self.sumup(i, b, args))
 
-  def compile(self, f, filename = '<template>', default_globals = {}, default_locals = None):
+  def compile(self, f, filename = '<template>', default_globals = {}, default_locals = None, add_to_linecache = False):
     """ :f: file-like stream"""
     l = []
     self.parse(iter(f), l)
     src = '\n'.join(l)
-    return Template(compile(src, filename, 'exec'), default_globals, default_locals, src)
+    src_filename = str(filename)+'.tempiny'
+    if add_to_linecache :
+      source = src
+      lines = src.splitlines(True)
+      linecache.cache[src_filename] = len(source), None, lines, filename
+    return Template(compile(src, src_filename, 'exec'), default_globals, default_locals, src)
   
   def compileFilename(self, filename, default_globals = {}, default_locals = {}):
     with open(filename, 'r') as f :
