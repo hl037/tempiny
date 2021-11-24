@@ -61,7 +61,7 @@ class Tempiny(object):
           i -= 1
         else:
           out.append('  '*i + m.group('stmt'))
-          if m.group('indent') is not None:
+          if m.group('indent') is not None and not m.group('stmt').startswith('#'):
             i += 1
       else:
         m = self.expr.search(l)
@@ -72,7 +72,7 @@ class Tempiny(object):
     out.append(self.sumup(i, b, args))
 
   def compile(self, f, filename = '<template>', default_globals = {}, default_locals = None, add_to_linecache = False):
-    """ :f: file-like stream"""
+    """ :f: iterable of lines (file-like is ok)"""
     l = []
     self.parse(iter(f), l)
     src = '\n'.join(l)
