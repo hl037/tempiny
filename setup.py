@@ -24,7 +24,7 @@ if sys.version_info < (3,):
 
 setup(
     name='tempiny',
-    version='1.0',
+    version='1.1',
     description='Tiny template engine',
     long_description=LONG_DESC,
     long_description_content_type='text/markdown',
