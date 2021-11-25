@@ -4,7 +4,7 @@
 Tempiny is a tiny and really simple template engine.
 
 The main feature is to be able to execute arbitrary python code inside the template,
-which makes it really powerfull for code generation for example.
+which makes it really powerful for code generation for example.
 
 See the skbs project to have a sense of what it can achieve !
 
@@ -22,12 +22,12 @@ First an example to demonstrate all its features :
 
     This text will be printed as it is
     
-    lines starting with '##' (or a user-configured prefix) are be python code.
+    Lines starting with '##' (or a user-configured prefix) are python code.
     
     ## a=5 # this won't be printed
     ## # this is a comment in the python script. Won't be printed.
     
-    if/else/for/while/with/try/except etc blocks don't need indentation. instead, a line containing only '## -' marks the block end.
+    if/else/for/while/with/try/except etc blocks don't need indentation. Instead, a line containing only '## -' marks the block end.
     
     ## for i in range(a) :
     ##   b = a + 1 # you may indent
@@ -45,14 +45,14 @@ First an example to demonstrate all its features :
     {{ ";".join( str(i) + f' - {a=},{b=},{c=}' for i in range(2)) }}
 
 
-will be ouputed as :
+will be output as :
 
     This text will be printed as it is
     
-    lines starting with '##' (or a user-configured prefix) are be python code.
+    Lines starting with '##' (or a user-configured prefix) are python code.
     
     
-    if/else/for/while/with/try/except etc blocks don't need indentation. instead, a line containing only '## -' marks the block end.
+    if/else/for/while/with/try/except etc blocks don't need indentation. Instead, a line containing only '## -' marks the block end.
    
     This text will be printed 5 times (a = 5) Btw, between a double brace (2 '{'), you can put expression that will be converted to str, and printed instead.
     To escape it, The prefered way is to declare variables containing the tokens (as done in skbs)
@@ -89,7 +89,7 @@ Basically, there are 3 contexts :
 ## Code context
 
 Each line starting by the code prefix (specified in `plugin.py`, or '##' by default) is basically python code except for the block delimitation :
-in python, the indentation level delimits a block while with tempiny, for pratical use, indentation doesn't matter, and a block is ended by a single dash ( "-" ).
+in python, the indentation level delimits a block while with tempiny, for practical use, indentation doesn't matter, and a block is ended by a single dash ( "-" ).
 
 Example : 
 
@@ -106,8 +106,8 @@ Any python code is allowed. This is the reason you should use templates **only f
 
 ## Text context
 
-Any line that doesn't start with the code prefix is "text", and will be outputed as is each time the execution flow reaches it.
-Basically, you can imagine (btw, this is actually how it is implemented...) each Text context is like a call to `print` 
+Any line that doesn't start with the code prefix is "text", and will be output as is each time the execution flow reaches it.
+Basically, you can imagine (by the way, this is actually how it is implemented...) each Text context is like a call to `print` 
 
 For example, the following : 
 
@@ -141,9 +141,9 @@ Will print :
     Item number 1
     Item number 2
 
-Any python cexpression is allowed.
+Any python expression is allowed.
 
-Once again, you sould only execute trusted templates.
+Once again, you should only execute trusted templates.
 
 # API
 
@@ -168,7 +168,7 @@ Note that you can use any string for these tokens.
 `Tempiny.compile(self, f:Iterable[str], filename='<template>', default_globals={}, default_locals=None) -> Template`:
 This method compiles a template. `f` should be an iterable of strings (an open file is ok). `default_globals` is a dict
 you can provide to have a default global scope when calling the template. You should probably leave `default_locals`
-to None except if you kwnow what you are doing.
+to None except if you know what you are doing.
 
 Example :
 
@@ -177,12 +177,12 @@ Example :
 
 
 `Template.__call__(self, out_stream, _globals={}, _locals=None) -> (dict, Exception)`
-This method permits to call the template, outputing in `out_stream` (it should at least have a `write(s:str)` method.
+This method permits to call the template, outputting in `out_stream` (it should at least have a `write(s:str)` method.
 You can provide a global scope (it will be shallow-copied before entering the template) through `_globals` to 
 pass values to the template. You can also provide a local scope through `_locals`, but it can lead to unexpected
 behaviour (not defined errors inside function or list-comprehension). Except if you know what to do, let it None, it
 will contain the same content as the globals.
-It returns the new locals (to retrive names defined or modiied from the template), and None if no exception occured,
+It returns the new locals (to retrieve names defined or modified from the template), and None if no exception occurred,
 or the exception if one raised.
 
 Example:
