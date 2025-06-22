@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=66.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tempiny"
+version = "1.2"
+authors = [
+  { name="Léo Flaventin Hauchecorne", email="hl037.prog@gmail.com" },
+]
+description = ""
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+]
+license= {text = "LGPL-2.1-or-later"}
+dynamic = ["dependencies"]
+
+[project.urls]
+#"Homepage" = "https://github.com/hl037/tempiny"
+#"Bug Tracker" = ""
+
+[project.scripts]
+#script_name = "module.submodule:function"
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+
