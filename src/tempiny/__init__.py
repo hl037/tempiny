@@ -73,6 +73,8 @@ class Tempiny(object):
 
   def compile(self, f, filename = '<template>', default_globals = {}, default_locals = None, add_to_linecache = False):
     """ :f: iterable of lines (file-like is ok)"""
+    if isinstance(f, str) :
+      f = f.splitlines(keepends=True)
     l = []
     self.parse(iter(f), l)
     src = '\n'.join(l)
@@ -86,6 +88,8 @@ class Tempiny(object):
   def compileFilename(self, filename, default_globals = {}, default_locals = {}):
     with open(filename, 'r') as f :
       return self.compile(f, filename, default_globals, default_locals)
-      
-    
+  
+  def __repr__(self):
+    stmt_line_start, begin_expr, end_expr = self.conf
+    return f'{self.__class__.__name__}({stmt_line_start=}, {begin_expr=}, {end_expr=})'
 
